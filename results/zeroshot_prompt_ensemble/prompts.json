@@ -1,0 +1,63 @@
+{
+  "humanitarian": {
+    "ensemble": {
+      "affected_individuals": [
+        "a photo of disaster victims or displaced people needing aid",
+        "a photo of civilians affected by a natural disaster sitting outside or in a shelter",
+        "a photo showing people impacted by a hurricane or flood"
+      ],
+      "infrastructure_and_utility_damage": [
+        "a photo of structural damage to buildings, roads, or bridges",
+        "a photo of collapsed walls, flooded roads, or fallen power lines",
+        "a photo of damaged infrastructure caused by a natural disaster"
+      ],
+      "injured_or_dead_people": [
+        "a photo of injured people receiving medical emergency care during a disaster",
+        "a photo of human casualties or injured individuals",
+        "a photo showing wounded people or paramedics assisting victims"
+      ],
+      "not_humanitarian": [
+        "a photo of a normal everyday scene, selfie, meme, or unrelated topic",
+        "a photo with no relation to a natural disaster or emergency response",
+        "a clear photo of regular life with no crisis details"
+      ],
+      "other_relevant_information": [
+        "a photo or infographic showing disaster weather maps, updates, or news notices",
+        "a photo of emergency announcement graphics or radar maps"
+      ],
+      "rescue_volunteering_or_donation_effort": [
+        "a photo of first responders, rescue operations, or volunteer aid workers",
+        "a photo of firefighters, coast guard rescue boats, or relief supply distributions",
+        "a photo showing food and water donation drop-off locations"
+      ],
+      "vehicle_damage": [
+        "a photo of damaged, submerged, or overturned vehicles and cars",
+        "a photo of cars crushed by debris or flooded during a storm"
+      ]
+    }
+  },
+  "damage": {
+    "ensemble": {
+      "dont_know_or_cant_judge": [
+        "a blurry, dark, or low-quality photo where any damage cannot be seen clearly",
+        "a photo of text, a screenshot, or a graphic with no scene to assess for damage",
+        "a close-up or ambiguous photo where the extent of the damage cannot be determined"
+      ],
+      "little_or_no_damage": [
+        "a photo of intact buildings, usable roads, and undamaged infrastructure",
+        "a photo showing minimal or no physical destruction after a disaster",
+        "a photo of a normal building or road with no structural damage"
+      ],
+      "mild_damage": [
+        "a photo showing partially damaged buildings, minor debris, or partially blocked roads",
+        "a photo of moderate structural damage, loose tiles, or flooded streets with intact structures",
+        "a photo of minor cracks, blown off shingles, or partial roof damage"
+      ],
+      "severe_damage": [
+        "a photo of completely destroyed buildings, collapsed structures, or washed out roads",
+        "a photo of total physical destruction, severe structural collapse, or unpassable sinkholes",
+        "a photo showing heavy disaster destruction with leveled buildings or completely ruined bridges"
+      ]
+    }
+  }
+}
