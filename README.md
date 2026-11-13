@@ -12,10 +12,9 @@ The code has three stages:
    cleans the tweet text, and writes one CSV (`data/crisismmd_clean.csv`) with
    image paths, labels and the train/dev/test split.
 3. **Frozen-CLIP experiments.** `extract_embeddings.py` encodes every image and
-   tweet once with CLIP (`openai/clip-vit-base-patch32`) and saves the vectors
-   to `embeddings/`. Baselines, zero-shot and fusion-head experiments train on
-   those saved vectors, so they are fast.
-4. **Fine-tuning experiments.** CLIP is fine-tuned end to end with LoRA
+   tweet once with CLIP and saves the vectors to `embeddings/`. Baselines,
+   zero-shot and fusion-head experiments train on those saved vectors, so they are fast.
+5. **Fine-tuning experiments.** CLIP is fine-tuned end to end with LoRA
    adapters on the top transformer layers. A small head fuses the image and text
    features. A variant fuses the token-level outputs with cross-attention.
 
@@ -33,10 +32,6 @@ python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/pip install peft          # needed by the LoRA scripts
 ```
-
-On Slurm you can run `sbatch setup.sbatch` instead of the first three commands.
-It creates `.venv` and installs `requirements.txt`.
-
 The CLIP weights download automatically from Hugging Face on first run. 
 
 ## Data
@@ -98,3 +93,13 @@ sbatch lora_token_fusion.sbatch        # token-level cross-attention fusion
 | `zeroshot_CLIP_LoRA.py` | Zero-shot Tasks 2 and 3 using the LoRA-tuned encoders |
 | `CLIP_LoRA_classifier_for_demo.py` | Loads a trained model and predicts for one image and text |
 | `label_counts.py` | Prints label counts |
+
+## Citation
+```bibtex
+@article{radford2021learning,
+  title={Learning Transferable Visual Models From Natural Language Supervision},
+  author={Radford, Alec et al.},
+  journal={ICML},
+  year={2021}
+}
+```
