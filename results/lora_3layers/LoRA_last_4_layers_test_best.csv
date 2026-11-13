@@ -1,0 +1,2 @@
+prompt_set,modality,split,accuracy,macro_f1,f1_not_informative,f1_informative
+lora_finetune,image+text,test,0.9353155972874283,0.9254618886951723,0.898360655737705,0.9525631216526397
