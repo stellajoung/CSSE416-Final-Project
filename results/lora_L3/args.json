@@ -1,0 +1,27 @@
+{
+  "csv": "data/crisismmd_clean.csv",
+  "image_root": "dataset/CrisisMMD_v2.0",
+  "image_column": "image_path",
+  "text_column": "text_clean",
+  "label_column": "image_info",
+  "all_rows": false,
+  "model": "openai/clip-vit-base-patch32",
+  "modalities": [
+    "image+text"
+  ],
+  "lora_frac": 0.25,
+  "lora_r": 8,
+  "lora_alpha": 16,
+  "lora_dropout": 0.1,
+  "lora_mlp": false,
+  "epochs": 5,
+  "batch_size": 32,
+  "lr_lora": 0.0001,
+  "lr_head": 0.001,
+  "weight_decay": 0.01,
+  "warmup": 0.1,
+  "class_weights": false,
+  "workers": 4,
+  "seed": 42,
+  "out_dir": "results/lora_L3"
+}
