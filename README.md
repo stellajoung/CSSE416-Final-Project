@@ -9,14 +9,13 @@ baselines, zero-shot CLIP, fusion heads and LoRA fine-tuned CLIP.
 The code has three stages:
 
 1. **Data preparation.** `clean_dataset.py` reads the raw CrisisMMD annotations,
-   cleans the tweet text (removes URLs, `RT @user`, mentions), and writes one
-   CSV (`data/crisismmd_clean.csv`) with image paths, labels and the
-   train/dev/test split.
-2. **Frozen-CLIP experiments.** `extract_embeddings.py` encodes every image and
+   cleans the tweet text, and writes one CSV (`data/crisismmd_clean.csv`) with
+   image paths, labels and the train/dev/test split.
+3. **Frozen-CLIP experiments.** `extract_embeddings.py` encodes every image and
    tweet once with CLIP (`openai/clip-vit-base-patch32`) and saves the vectors
    to `embeddings/`. Baselines, zero-shot and fusion-head experiments train on
    those saved vectors, so they are fast.
-3. **Fine-tuning experiments.** CLIP is fine-tuned end to end with LoRA
+4. **Fine-tuning experiments.** CLIP is fine-tuned end to end with LoRA
    adapters on the top transformer layers. A small head fuses the image and text
    features. A variant fuses the token-level outputs with cross-attention.
 
@@ -65,19 +64,19 @@ Run the steps in this order. Each `.sbatch` file wraps the Python script of the
 same name.
 
 ```bash
-# 1. Clean the data  -> data/crisismmd_clean.csv
+# 1. Clean the data
 sbatch clean.sbatch
 
-# 2. Extract frozen CLIP embeddings  -> embeddings/*.npz
+# 2. Extract frozen CLIP embeddings
 sbatch extract.sbatch
 
-# 3. Frozen-embedding experiments  -> results/*.csv
+# 3. Frozen-embedding experiments
 sbatch baselines.sbatch
 sbatch zeroshot.sbatch
 sbatch cosine_feature.sbatch
 sbatch cross_attention.sbatch
 
-# 4. LoRA fine-tuning  -> results/lora_*/
+# 4. LoRA fine-tuning
 sbatch CLIP_LoRA_3layers.sbatch        # LoRA on top layers, image+text
 sbatch lora_token_fusion.sbatch        # token-level cross-attention fusion
 ```
