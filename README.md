@@ -4,7 +4,7 @@ Classifying disaster tweets (image + text) with CLIP. The main task is
 **CrisisMMD Task 1: informative vs. not informative**. We compare frozen-CLIP
 baselines, zero-shot CLIP, fusion heads and LoRA fine-tuned CLIP.
 
-## High-level overview
+## Overview
 
 The code has three stages:
 
@@ -38,18 +38,7 @@ python3 -m venv .venv
 On Slurm you can run `sbatch setup.sbatch` instead of the first three commands.
 It creates `.venv` and installs `requirements.txt`.
 
-| Package | Used for |
-|---------|----------|
-| `torch` | models and training |
-| `transformers>=4.40,<5` | CLIP model and processor |
-| `peft` | LoRA adapters (not in `requirements.txt`, install separately) |
-| `datasets` | Hugging Face utilities |
-| `pillow` | image loading |
-| `numpy`, `pandas` | data handling |
-| `scikit-learn` | logistic regression and metrics |
-
-The CLIP weights download automatically from Hugging Face on first run. The
-sbatch scripts set `HF_HOME=.hf_cache` so the cache stays in the repo folder.
+The CLIP weights download automatically from Hugging Face on first run. 
 
 ## Data
 
@@ -63,17 +52,6 @@ research use and is not included in this repo.
 **Where to put it:** make a `dataset/` folder in the repo root and extract the
 downloads there.
 
-```
-dataset/
-├── CrisisMMD_v2.0/                       # from CrisisMMD_v2.0.tar.gz
-│   ├── annotations/                      # one TSV per event
-│   ├── data_image/                       # images, grouped by event and day
-│   └── json/
-└── crisismmd_datasplit_agreed_label/     # from crisismmd_datasplit_agreed_label.zip
-    ├── task_informative_text_img_agreed_lab_{train,dev,test}.tsv
-    └── task_humanitarian_text_img_agreed_lab_{train,dev,test}.tsv
-```
-
 ```bash
 mkdir -p dataset && cd dataset
 tar -xzf CrisisMMD_v2.0.tar.gz
@@ -81,13 +59,10 @@ unzip crisismmd_datasplit_agreed_label.zip
 cd ..
 ```
 
-`data/`, `dataset/`, `embeddings/`, `logs/` and `runs/` are git-ignored. They
-are generated or downloaded locally.
-
 ## How to run
 
 Run the steps in this order. Each `.sbatch` file wraps the Python script of the
-same name. To skip Slurm, run `.venv/bin/python <script>.py` directly.
+same name.
 
 ```bash
 # 1. Clean the data  -> data/crisismmd_clean.csv
@@ -107,8 +82,6 @@ sbatch CLIP_LoRA_3layers.sbatch        # LoRA on top layers, image+text
 sbatch lora_token_fusion.sbatch        # token-level cross-attention fusion
 ```
 
-Run `python <script>.py --help` to see each script's options.
-
 ## Code guide
 
 | File | What it does |
@@ -126,23 +99,3 @@ Run `python <script>.py --help` to see each script's options.
 | `zeroshot_CLIP_LoRA.py` | Zero-shot Tasks 2 and 3 using the LoRA-tuned encoders |
 | `CLIP_LoRA_classifier_for_demo.py` | Loads a trained model and predicts for one image and text |
 | `label_counts.py` | Prints label counts |
-
-## Demo inference
-
-```python
-from CLIP_LoRA_classifier_for_demo import load_model, predict
-
-model = load_model("results/lora_3layers/image_text")   # once, at startup
-p_inf, p_not = predict(model, image, text)              # per request
-```
-
-`image` can be a path, bytes, a file-like object or a PIL image. `text` is the
-tweet that goes with it.
-
-## Outputs
-
-- `results/`: metrics and predictions, one file or folder per experiment
-  (`baselines.csv`, `zeroshot.csv`, `cross_attention.csv`, `lora_3layers/`,
-  `lora_token_L3frozen/`, ...). Trained LoRA adapters and heads are saved inside
-  the LoRA folders.
-- `logs/` and `slurm-*.out`: Slurm job logs.
